@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../home.css">
+    <link rel="shortcut icon" href="assets/mc-logo.png" type="image/x-icon">
+    <title>Eaglercraft Vault but on the Web</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+    rel="stylesheet">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B23XL7G2NK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B23XL7G2NK');
+</script>
+<body>
+
+<ul>
+    <li><a style="margin-left: 5px;" class="active" href="index.html">Home</a></li>
+    <li><a href="clients.html">Clients</a></li>
+    <li><a href="servers.html">Servers</a></li>
+    <li><a href="mc quick guide/index.html" target="_blank">Quick Guide</a></li>
+    <li><a href="../indexmic.html">Back</a></li>
+    <li style="float: right;"><a href="https://github.com/mic9371/mic9371.github.io" target="_blank"><img src="assets/github.png" style="height: 25px; color: white;" alt=""></a></li>
+</ul>
+
+<br><br><br><br>
+
+<div style="display: flex; justify-content: center;">
+    <img src="assets/mc-logo.png" style="height: 175px; margin-right: 25px;" alt="logo">
+    <h1 style="font-size: 42px; font-family: inter-bold; margin-top: 60px;">Eaglercraft Vault but on the Web</h1>
+</div>
+
+<br><br>
+
+<div class="container">
+    <button class="big-button"><u>Announcements</u> <br><br>This Exists Now</button>
+    <button class="big-button">Need Help?<br><br>Fill out an issue or a discussion! We'll be sure to get back to it.</button>
+</div>
+
+<script>
+  function cloneToAboutBlank() {
+    const password = prompt("Enter password to open in about:blank:");
+    const correctPassword = "vaultpass123"; // change this to your own password
+
+    if (password !== correctPassword) {
+      alert("Incorrect password.");
+      return;
+    }
+
+    const html = document.documentElement.outerHTML;
+    const newTab = window.open('about:blank', '_blank');
+
+    if (newTab) {
+      newTab.document.open();
+      newTab.document.write(html);
+      newTab.document.close();
+    } else {
+      alert("Popup blocked! Please allow popups for this site.");
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const btn = document.createElement("button");
+    btn.textContent = "Clone to about:blank";
+    btn.onclick = cloneToAboutBlank;
+    btn.style.position = "fixed";
+    btn.style.bottom = "10px";
+    btn.style.left = "10px";
+    btn.style.backgroundColor = "#222";
+    btn.style.color = "white";
+    btn.style.padding = "10px 15px";
+    btn.style.border = "none";
+    btn.style.borderRadius = "8px";
+    btn.style.fontFamily = "sans-serif";
+    btn.style.cursor = "pointer";
+    btn.style.zIndex = "9999";
+    document.body.appendChild(btn);
+  });
+</script>
+
+<script>
+  const COOKIE_NAME = "passinputtedcorrect";
+
+  function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === name) return value;
+    }
+    return null;
+  }
+
+  function openInAboutBlank() {
+    const html = document.documentElement.outerHTML;
+    const win = window.open("about:blank", "_blank");
+    win.document.write(html);
+    win.document.close();
+    window.close(); // only works if user-initiated
+  }
+
+  window.onload = () => {
+    if (getCookie(COOKIE_NAME) === "true") {
+      openInAboutBlank();
+    }
+  };
+</script>
+
+
+
+</body>
+</html>

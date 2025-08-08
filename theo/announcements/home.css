@@ -52,28 +52,22 @@ button:hover {
 }
 
 .big-button {
-    display: inline-block; /* so it behaves like a button */
-    text-decoration: none; /* removes link underline */
-    text-align: center;
-    border-radius: 30px;
-    height: 300px;
-    width: 455px;
-    font-size: 25px;
-    font-family: inter-semibold;
-    color: white;
-    background-color: rgb(29, 29, 29);
-    border-color: white;
-    border-width: 0.5px;
-    box-shadow: none;
-    outline: none;
-    border-style: solid;
-    cursor: pointer;
-    transition: 0.3s;
-    margin: 10px;
-}
-.big-button:hover {
-    background-color: rgba(116, 116, 116, 0.671);
-    scale: 105%;
+   text-align: center;
+   border-radius: 30px;
+   height: 300px;
+   width: 455px;
+   font-size: 25px;
+   font-family: inter-semibold;
+   color: white;
+   background-color: rgb(29, 29, 29);
+   border-color: white;
+   border-width: 0.5px;
+   box-shadow: none;
+   outline: none;
+   border-style: solid;
+   cursor: pointer;
+   transition: 0.3s;
+   margin: 10px;
 }
 
 .center-logo {

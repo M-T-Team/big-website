@@ -17,6 +17,13 @@ h1 {
     font-family: inter-bold;
 }
 
+h2 {
+    font-family: inter-bold;
+    font-size: 42px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
 body {
     background: rgb(29, 29, 29);
     color: white;
@@ -52,22 +59,28 @@ button:hover {
 }
 
 .big-button {
-   text-align: center;
-   border-radius: 30px;
-   height: 300px;
-   width: 455px;
-   font-size: 25px;
-   font-family: inter-semibold;
-   color: white;
-   background-color: rgb(29, 29, 29);
-   border-color: white;
-   border-width: 0.5px;
-   box-shadow: none;
-   outline: none;
-   border-style: solid;
-   cursor: pointer;
-   transition: 0.3s;
-   margin: 10px;
+    display: inline-block; /* so it behaves like a button */
+    text-decoration: none; /* removes link underline */
+    text-align: center;
+    border-radius: 30px;
+    height: 300px;
+    width: 455px;
+    font-size: 25px;
+    font-family: inter-semibold;
+    color: white;
+    background-color: rgb(29, 29, 29);
+    border-color: white;
+    border-width: 0.5px;
+    box-shadow: none;
+    outline: none;
+    border-style: solid;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 10px;
+}
+.big-button:hover {
+    background-color: rgba(116, 116, 116, 0.671);
+    scale: 105%;
 }
 
 .center-logo {
@@ -230,3 +243,52 @@ ul {
 .status.unknown span {
     color: orange;
 }
+  
+  /* Announcement styling */
+  
+  .announcement {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    border: 0.5px solid white;
+    background-color: rgb(29, 29, 29);
+    font-family: inter-medium;
+    color: white;
+    padding: 15px 20px;
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    transition: transform 0.3s, background-color 0.3s;
+    cursor: default;
+  }
+  
+  .announcement:hover {
+    background-color: rgba(116, 116, 116, 0.671);
+    transform: scale(1.02);
+  }
+  
+  .announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  
+  .announcement-title {
+    font-size: 28px;
+    font-family: inter-semibold;
+  }
+  
+  .announcement-time {
+    font-size: 14px;
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+  
+  .announcement-body {
+    font-size: 20px;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  
+  /* Add any other styles you want here */  

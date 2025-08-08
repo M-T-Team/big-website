@@ -62,7 +62,7 @@
 
     <div class="stats">
       <div class="stat">
-        <div class="small">CLicks</div>
+        <div class="small">Clicks</div>
         <div style="font-weight:700;font-size:20px" id="blocks">0</div>
       </div>
       <div class="stat">
@@ -96,10 +96,13 @@
 
 <script>
 /* ========== GAME STATE ========== */
+const basePerClick = 1;
+const SAVE_KEY = 'blockclicker_save_v1';
+
 const game = {
   blocks: 0,
   totalClicks: 0,
-  perClick: 1,
+  perClick: basePerClick,
   bps: 0, // blocks per second from producers
   upgrades: [
     {id:'click1', name:'Better Pick', desc:'+1 click per click', baseCost:15, costMult:1.15, level:0, type:'click', value:1},
@@ -128,9 +131,12 @@ const toast = (t) => {
 };
 
 /* ========== SAVE / LOAD ========== */
-const SAVE_KEY = 'blockclicker_save_v1';
 function saveGame(){
-  localStorage.setItem(SAVE_KEY, JSON.stringify(game));
+  localStorage.setItem(SAVE_KEY, JSON.stringify({
+    blocks: game.blocks,
+    totalClicks: game.totalClicks,
+    upgrades: game.upgrades.map(u => ({id: u.id, level: u.level}))
+  }));
   toast('Saved');
 }
 function loadGame(){
@@ -138,10 +144,17 @@ function loadGame(){
   if (!s) return;
   try{
     const obj = JSON.parse(s);
-    Object.assign(game, obj);
-    // make sure upgrade objects are present in case code changed
-    if (!Array.isArray(game.upgrades)) game.upgrades = [];
+    if (obj.upgrades && Array.isArray(obj.upgrades)) {
+      for (const savedU of obj.upgrades) {
+        const baseU = game.upgrades.find(u => u.id === savedU.id);
+        if (baseU) baseU.level = savedU.level || 0;
+      }
+    }
+    game.blocks = obj.blocks || 0;
+    game.totalClicks = obj.totalClicks || 0;
   }catch(e){ console.warn('Load failed', e) }
+  recalcPerClick();
+  recalcBPS();
 }
 
 /* ========== GAME MECHANICS ========== */
@@ -163,16 +176,20 @@ function buyUpgrade(id){
   renderStats();
 }
 
-function applyUpgradeEffects(u){
-  if (u.type === 'click'){
-    game.perClick += u.value; // additive
-  } else if (u.type === 'auto'){
-    // autos affect bps calculation, we recalc in recalcBPS
-  } else if (u.type === 'mult_click'){
-    // multiplicative: apply by increasing perClick by percentage of current perClick
-    game.perClick = game.perClick * u.value;
+function recalcPerClick() {
+  // Additive click upgrades
+  let additive = 0;
+  for (const u of game.upgrades) {
+    if (u.type === 'click') additive += u.level * u.value;
   }
-  recalcBPS();
+  // multiplicative upgrades (like reinforced glove)
+  let mult = 1;
+  for (const u of game.upgrades) {
+    if (u.type === 'mult_click' && u.level > 0) {
+      mult *= Math.pow(u.value, u.level);
+    }
+  }
+  game.perClick = (basePerClick + additive) * mult;
 }
 
 function recalcBPS(){
@@ -183,6 +200,11 @@ function recalcBPS(){
     }
   }
   game.bps = tot;
+}
+
+function applyUpgradeEffects(u){
+  recalcPerClick();
+  recalcBPS();
 }
 
 /* ========== UI ========== */
@@ -230,8 +252,8 @@ function renderUpgrades(){
 function makeSpark(text,x,y){
   const s = document.createElement('div');
   s.className = 'spark';
-  s.style.left = x + 'px';
-  s.style.top = y + 'px';
+  s.style.left = (x + window.pageXOffset) + 'px';
+  s.style.top = (y + window.pageYOffset) + 'px';
   s.textContent = text;
   sparks.appendChild(s);
   // animate
@@ -275,7 +297,11 @@ function tick(){
 /* ========== EXPORT / IMPORT / RESET ========== */
 document.getElementById('saveBtn').addEventListener('click', saveGame);
 document.getElementById('exportBtn').addEventListener('click', ()=>{
-  const data = JSON.stringify(game);
+  const data = JSON.stringify({
+    blocks: game.blocks,
+    totalClicks: game.totalClicks,
+    upgrades: game.upgrades.map(u => ({id: u.id, level: u.level}))
+  });
   navigator.clipboard?.writeText(data).then(()=> toast('Save copied to clipboard'));
 });
 document.getElementById('importBtn').addEventListener('click', async ()=>{
@@ -283,7 +309,15 @@ document.getElementById('importBtn').addEventListener('click', async ()=>{
   if (!json) return;
   try{
     const obj = JSON.parse(json);
-    Object.assign(game, obj);
+    if (obj.upgrades && Array.isArray(obj.upgrades)) {
+      for (const savedU of obj.upgrades) {
+        const baseU = game.upgrades.find(u => u.id === savedU.id);
+        if (baseU) baseU.level = savedU.level || 0;
+      }
+    }
+    game.blocks = obj.blocks || 0;
+    game.totalClicks = obj.totalClicks || 0;
+    recalcPerClick();
     recalcBPS();
     renderStats();
     renderUpgrades();
@@ -296,9 +330,8 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
   // reset values keep upgrades structure
   game.blocks = 0;
   game.totalClicks = 0;
-  game.perClick = 1;
-  game.bps = 0;
   for (const u of game.upgrades) u.level = 0;
+  recalcPerClick();
   recalcBPS();
   renderStats();
   renderUpgrades();
@@ -306,6 +339,7 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
 
 /* ========== INIT ========== */
 loadGame();
+recalcPerClick();
 recalcBPS();
 renderStats();
 renderUpgrades();
@@ -321,7 +355,6 @@ window.addEventListener('blur', saveGame);
 
 // small friendly message
 console.log('Block Clicker loaded — have fun!');
-
 </script>
 </body>
 </html>

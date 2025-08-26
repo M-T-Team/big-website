@@ -1,16 +1,16 @@
 @font-face {
     font-family: comfortaa-bold;
-    src: url(assets/Inter-Bold.ttf);
+    src: url(assets/Comfortaa-Bold.ttf);
 }
 
 @font-face {
     font-family: comfortaa-semibold;
-    src: url(assets/Inter-SemiBold.ttf);
+    src: url(assets/Comfortaa-SemiBold.ttf);
 }
 
 @font-face {
     font-family: comfortaa-medium;
-    src: url(assets/Inter-Medium.ttf);
+    src: url(assets/Comfortaa-Medium.ttf);
 }
 
 h1 {

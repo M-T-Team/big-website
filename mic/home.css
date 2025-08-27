@@ -237,33 +237,4 @@ ul {
     color: orange;
 }
 
-/* Add this to your existing CSS file or update the relevant parts */
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* optional, for vertical centering */
-}
-
-.big-button {
-    display: inline-block;
-    padding: 20px 40px;
-    font-size: 1.2em;
-    font-family: inherit;
-    border: none;
-    border-radius: 8px;
-    background-color: #444444; /* lighter than #222 or #333 */
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: background 0.2s;
-    margin: 0 auto;
-}
-
-.big-button:hover, .big-button:focus {
-    background-color: #555555; /* slightly lighter on hover */
-    color: white;
-    text-decoration: none;
-}

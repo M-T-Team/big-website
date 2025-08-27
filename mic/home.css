@@ -252,18 +252,18 @@ ul {
     font-family: inherit;
     border: none;
     border-radius: 8px;
-    background-color: #4CAF50;
+    background-color: #444444; /* lighter than #222 or #333 */
     color: white;
     text-align: center;
-    text-decoration: none; /* ensures <a> looks like a button */
+    text-decoration: none;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     transition: background 0.2s;
-    margin: 0 auto; /* horizontal centering for block elements */
+    margin: 0 auto;
 }
 
 .big-button:hover, .big-button:focus {
-    background-color: #388E3C;
+    background-color: #555555; /* slightly lighter on hover */
     color: white;
     text-decoration: none;
 }
